@@ -9,7 +9,7 @@ run:
 	./$(MAIN)
 
 build: $(FILE)
-	g++ --std=c++14 -Wall -Wextra -Werror -Weffc++ -o $(MAIN) $(FILE) -lgmpxx -lgmp
+	g++ --std=c++14 -O0 -Wall -Wextra -Werror -Weffc++ -o $(MAIN) $(FILE) -lgmpxx -lgmp
 
 build.compact: $(FILE)
 	$(CXX) --std=c++14 -O2 -o $(MAIN) $(FILE)
