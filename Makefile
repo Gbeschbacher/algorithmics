@@ -6,21 +6,21 @@ MAIN = fib
 all: build.compact run
 
 run:
-    ./$(MAIN)
+	./$(MAIN)
 
 build: $(FILE)
-    $(CXX) --std=c++14 -Wall -Wextra -Werror -Weffc++ -o $(MAIN) $(FILE)
+	g++ --std=c++14 -Wall -Wextra -Werror -Weffc++ -o $(MAIN) $(FILE) -lgmpxx -lgmp
 
 build.compact: $(FILE)
-    $(CXX) --std=c++14 -O2 -o $(MAIN) $(FILE)
+	$(CXX) --std=c++14 -O2 -o $(MAIN) $(FILE)
 
 plot:
-    gnuplot $(CONFIG) > $(RESULT)
+	gnuplot $(CONFIG) > $(RESULT)
 
 clean.main:
-    rm ./$(MAIN)
+	rm ./$(MAIN)
 
 clean.dat:
-    rm *.dat
+	rm *.dat
 
 clean: clean.dat clean.main
