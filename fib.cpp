@@ -6,6 +6,8 @@
 #include <gmp.h>
 #include <gmpxx.h>
 #include <cmath>
+#include <chrono>
+#include <time.h>
 
 constexpr unsigned replications = 5;
 
@@ -31,6 +33,14 @@ struct measure {
       func(std::forward<_args>(args)...);
       uint64_t y = measure::rdtsc();
       return (y - x);
+    }
+
+    template<typename _function, typename ..._args>
+    static decltype(auto) ms(_function func, _args&&... args){
+      auto x = std::chrono::system_clock::now();
+      func(std::forward<_args>(args)...);
+      auto y = std::chrono::system_clock::now();
+      return std::chrono::duration_cast<std::chrono::microseconds>(y - x).count();
     }
 
 };
@@ -76,22 +86,16 @@ double sample_standard_deviation(T* data, uint32_t nelem) {
  * RECURSIVE
  *
  * */
-void fib1( mpz_t res, unsigned int n ) {
+mpz_class fib1( unsigned int n ) {
 
     if ( n == 0 )
-        mpz_set_ui( res, 0 );
-    else if ( n == 1 || n == 2 )
-        mpz_set_ui( res, 1 );
-    else{
-        mpz_t f1, f2;
+        return 0;
 
-        mpz_init( f1 );
-        mpz_init( f2 );
+    if ( n == 1 || n == 2 )
+        return 1;
 
-        fib1( f1, n - 1 );
-        fib1( f2, n - 2 );
-        mpz_add( res, f1, f2 );
-    }
+    return fib1( n - 1 ) + fib1( n - 2 );
+
 }
 
 
@@ -100,29 +104,27 @@ void fib1( mpz_t res, unsigned int n ) {
  * ITERATIVE
  *
  * */
-void fib2( mpz_t res, unsigned int n ){
+mpz_class fib2( unsigned int n ){
 
 
     if ( n == 0 )
-        mpz_set_ui( res, 0 );
-    else if ( n == 1 || n == 2 )
-        mpz_set_ui( res, 1 );
-    else{
+        return 0;
 
-        mpz_t x, y;
+    if ( n == 1 || n == 2 )
+        return 1;
 
-        mpz_init( x );
-        mpz_init( y );
+    mpz_class res,
+      x = 0,
+      y = 1;
 
-        mpz_set_ui( x, 0 );
-        mpz_set_ui( y, 1 );
-
-        for( unsigned int i = 1; i < n; ++i ){
-            mpz_add( res, x, y );
-            mpz_set( x, y );
-            mpz_set( y, res );
-        }
+    for( unsigned int i = 1; i < n; ++i ){
+      res = x + y;
+      x = y;
+      y = res;
     }
+
+    return res;
+
 }
 
 /**
@@ -238,9 +240,7 @@ mpz_class fib5( int n ){
 
 int main(){
 
-    uint64_t samples[replications];
-    mpz_t res;
-    mpz_init(res);
+    double samples[replications];
 
     std::ofstream _fib1 ("fib1.dat");
     std::ofstream _fib2 ("fib2.dat");
@@ -257,8 +257,8 @@ int main(){
    for( unsigned int i = 100; i <= 1000000; i *= 10 ){
     _fib2 << "fibonacci_iterative\t" << i << "\t";
         for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
-            uint64_t time = measure::cycles([&res,&i](){
-                fib2(res, i);
+            double time = measure::cycles([&i](){
+                fib2(i);
             });
             samples[sampleRun] = time;
         }
@@ -274,7 +274,7 @@ int main(){
    for( unsigned int i = 100; i <= 1000000; i *= 10 ){
     _fib3 << "fibonacci_matrix_bitmask\t" << i << "\t";
         for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
-            uint64_t time = measure::cycles([&i](){
+            double time = measure::cycles([&i](){
                 fib3(i);
             });
             samples[sampleRun] = time;
@@ -291,7 +291,7 @@ int main(){
    for( unsigned int i = 100; i <= 1000000; i *= 10 ){
     _fib4 << "fibonacci_matrix_helpermask\t" << i << "\t";
         for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
-            uint64_t time = measure::cycles([&i](){
+            double time = measure::ms([&i](){
                 fib4(i);
             });
             samples[sampleRun] = time;
@@ -308,7 +308,7 @@ int main(){
    for( unsigned int i = 100; i <= 1000000; i *= 10 ){
     _fib5 << "fibonacci_matrix_opzimized_helper\t" << i << "\t";
         for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
-            uint64_t time = measure::cycles([&i](){
+            auto time = measure::ms([&i](){
                 fib5(i);
             });
             samples[sampleRun] = time;
@@ -318,22 +318,22 @@ int main(){
     }
 
 
-/**
- *
- * RECURSIVE (STACK TOO SMALL FOR FIB(100))
- *
- * */
-   // for( unsigned int i = 100; i <= 1000000; i *= 10 ){
-   //  std::cout << "fibonacci recursive\t" << i << "\t";
-   //      for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
-   //          uint64_t time = measure::cycles([&res,&i](){
-   //              fib1(res, i);
-   //          });
-   //          samples[sampleRun] = time;
-   //      }
-   //      std::cout << "\ttime mean\t" << arithmetic_mean(samples, replications);
-   //      std::cout << "\tdeviation\t" << sample_standard_deviation(samples, replications) << std::endl;
-   //  }
+// /**
+//  *
+//  * RECURSIVE (STACK TOO SMALL FOR FIB(100))
+//  *
+//  * */
+//    // for( unsigned int i = 100; i <= 1000000; i *= 10 ){
+//    //  std::cout << "fibonacci recursive\t" << i << "\t";
+//    //      for( unsigned int sampleRun = 0; sampleRun < replications; ++sampleRun ){
+//    //          uint64_t time = measure::cycles([&res,&i](){
+//    //              fib1(res, i);
+//    //          });
+//    //          samples[sampleRun] = time;
+//    //      }
+//    //      std::cout << "\ttime mean\t" << arithmetic_mean(samples, replications);
+//    //      std::cout << "\tdeviation\t" << sample_standard_deviation(samples, replications) << std::endl;
+//    //  }
 
 
     _fib1.close();

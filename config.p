@@ -4,6 +4,8 @@ set xlabel "fib(n)"
 set ylabel "Cycles"
 
 set logscale x
+set logscale y
+set format y "%2.0t{/Symbol \327}10^{%L}"
 
 plot \
 "fib2.dat" using 2:4:6:xticlabel(2) with errorlines title "Iterative", \
