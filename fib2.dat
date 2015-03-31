@@ -1,0 +1,5 @@
+fibonacci_iterative	100		time_mean	13609.4	standard_deviation	10481.8
+fibonacci_iterative	1000		time_mean	112604	standard_deviation	7355.72
+fibonacci_iterative	10000		time_mean	3.01967e+06	standard_deviation	717528
+fibonacci_iterative	100000		time_mean	1.83866e+08	standard_deviation	1.55553e+07
+fibonacci_iterative	1000000		time_mean	1.8548e+10	standard_deviation	3.61242e+08

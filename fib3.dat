@@ -1,0 +1,5 @@
+fibonacci_matrix_bitmask	100		time_mean	66636	standard_deviation	21772
+fibonacci_matrix_bitmask	1000		time_mean	101181	standard_deviation	15722.5
+fibonacci_matrix_bitmask	10000		time_mean	406566	standard_deviation	106615
+fibonacci_matrix_bitmask	100000		time_mean	5.80223e+06	standard_deviation	508233
+fibonacci_matrix_bitmask	1000000		time_mean	1.2595e+08	standard_deviation	1.62758e+07
