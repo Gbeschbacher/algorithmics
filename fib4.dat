@@ -1,0 +1,5 @@
+fibonacci_matrix_helpermask	100		time_mean	184.8	standard_deviation	10.9864
+fibonacci_matrix_helpermask	1000		time_mean	2123.4	standard_deviation	6.94982
+fibonacci_matrix_helpermask	10000		time_mean	29278	standard_deviation	592.851
+fibonacci_matrix_helpermask	100000		time_mean	1.09517e+06	standard_deviation	32549.3
+fibonacci_matrix_helpermask	1000000		time_mean	9.37243e+07	standard_deviation	240189

@@ -1,0 +1,5 @@
+fibonacci_matrix_opzimized_helper	100		time_mean	19.4	standard_deviation	2.60768
+fibonacci_matrix_opzimized_helper	1000		time_mean	37.2	standard_deviation	2.77489
+fibonacci_matrix_opzimized_helper	10000		time_mean	103.8	standard_deviation	6.64831
+fibonacci_matrix_opzimized_helper	100000		time_mean	1773.2	standard_deviation	196.376
+fibonacci_matrix_opzimized_helper	1000000		time_mean	38193.4	standard_deviation	2429.98
