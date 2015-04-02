@@ -1,5 +1,0 @@
-fibonacci_rec 100     time_mean   2.0e+10 standard_deviation  0
-fibonacci_rec 1000        time_mean   2.0e+10  standard_deviation  0
-fibonacci_rec 10000       time_mean   2.0e+10 standard_deviation  0
-fibonacci_rec 100000      time_mean   2.0e+10 standard_deviation  0
-fibonacci_rec 1000000     time_mean   2.0e+10  standard_deviation  0
