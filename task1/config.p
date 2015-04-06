@@ -4,7 +4,7 @@ set xlabel "Fib(x) "
 set ylabel "Nanoseconds"
 
 set autoscale
-set logscale
+set logscale x
 
 plot \
 "fib2.dat" using 2:(1000 * $4):(1000 * $6):xticlabel(2) with errorlines title "Iterative", \
