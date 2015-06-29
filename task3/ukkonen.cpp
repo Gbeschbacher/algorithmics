@@ -105,9 +105,8 @@ Reference Ukkonen::canonize(const Reference& reference){
 
             if(label.size() > 0 && label[0] == s_text->at(result.m_startIndex)){
 
-                if(children[i]->getChildren().size() <= 0 || labelSize-1 > (p - k)){
+                if(children[i]->getChildren().size() <= 0 || labelSize-1 > (p - k))
                     return result;
-                }
 
                 result.m_node = children[i];
                 result.m_startIndex += labelSize;
@@ -116,13 +115,13 @@ Reference Ukkonen::canonize(const Reference& reference){
 
             }
         }
+
         if(found){
             k = result.m_startIndex;
             p = result.m_endIndex;
         }
-        else{
+        else
             return result;
-        }
     }
     return result;
 }

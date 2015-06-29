@@ -97,9 +97,9 @@ static void test(){
 int main(){
 
     std::string text = "ababbaa";
-    text = "banana";
     text = "ababbaa";
     text = "GEEKSFORGEEKS";
+    text = "banana";
     Ukkonen ukk;
     Node* root;
 
