@@ -2,6 +2,8 @@
 #define UKKONEN_H
 
 #include <string>
+#include <iostream>
+#include <limits>
 #include "node.h"
 
 class Ukkonen{

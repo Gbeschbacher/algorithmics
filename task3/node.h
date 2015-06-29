@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 #include <iostream>
-#include <queue>
 
 class Node{
     public:
@@ -30,8 +29,6 @@ class Node{
 
         bool isVirtualRoot() const;
 
-        void print(Node* root) const;
-
     private:
         int m_startIndex;
         int m_endIndex;
@@ -39,6 +36,7 @@ class Node{
         bool m_isVirtualRoot;
         Node* m_suffixLink;
         std::shared_ptr<std::string> m_text;
+
 };
 
 struct Reference{
