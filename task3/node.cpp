@@ -88,3 +88,20 @@ std::string Node::getLabel(int length) const{
 bool Node::isVirtualRoot() const{
     return m_isVirtualRoot;
 }
+
+void Node::print(Node* node) const{
+    std::queue<Node*> q;
+    q.push(node);
+
+    while (!q.empty()) {
+        Node* n = q.front();
+        q.pop();
+        std::vector<Node*> children = n->getChildren();
+
+        for(unsigned i = 0; i != children.size(); i++)
+            q.push(children[i]);
+
+        std::cout << n->getLabel() << std::endl;
+    }
+}
+

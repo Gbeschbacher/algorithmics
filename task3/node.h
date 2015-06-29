@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <vector>
+#include <iostream>
+#include <queue>
 
 class Node{
     public:
@@ -27,6 +29,8 @@ class Node{
         std::string getLabel(int length = -1) const;
 
         bool isVirtualRoot() const;
+
+        void print(Node* root) const;
 
     private:
         int m_startIndex;
