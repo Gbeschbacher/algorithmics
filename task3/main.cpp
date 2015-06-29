@@ -72,8 +72,30 @@ void getLongestRepeatedSubstring(Node* root, std::string text){
     printf("\n");
 }
 
+static std::string getText(long l){
+    long current = l;
+    std::stringstream ss;
+
+    while(current > 0){
+        ss << (current % 2 == 0 ? "a" : "b");
+        current /= 2;
+    }
+
+    return ss.str();
+}
+
+static void test(){
+    for(long l = 1; l < std::numeric_limits<long>::max(); ++l){
+        Ukkonen ukk;
+        Node* root;
+        root = ukk.buildSuffixTree(getText(l));
+    }
+}
+
+
 
 int main(){
+
     std::string text = "ababbaa";
     text = "banana";
     text = "ababbaa";
@@ -86,8 +108,8 @@ int main(){
 
     std::cout << "\n\n* _ | \t | _ * \t * _ | \t | _ * \t * _ | \t | _ * \t\n\n";
 
-    // getLongestRepeatedSubstring(root, text);
 
+    // getLongestRepeatedSubstring(root, text);
 
     // std::stringstream ss;
     // ss << "book1.txt";
