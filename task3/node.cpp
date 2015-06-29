@@ -36,9 +36,8 @@ void Node::removeChild(unsigned int index){
 
 Node* Node::getChild(unsigned int index){
 
-    if(index < m_children.size()){
+    if(index < m_children.size())
         return m_children[index];
-    }
 }
 
 std::vector<Node*> Node::getChildren(){
@@ -57,31 +56,23 @@ std::string Node::getLabel(int length) const{
 
     std::string result = "";
     if((m_endIndex - m_startIndex) >= 0 && m_startIndex < m_text->size()){
+
         if(length > 0){
-            if(length < (m_endIndex - m_startIndex) && (m_startIndex + length)
-                < m_text->size()){
+            if(length < (m_endIndex - m_startIndex) && (m_startIndex + length) < m_text->size())
                 result = m_text->substr(m_startIndex, length);
-            }
-
-            else if(m_endIndex < m_text->size()){
-                result = m_text->substr(m_startIndex, (m_endIndex - m_startIndex)
-                    + 1);
-            }
-
-            else{
+            else if(m_endIndex < m_text->size())
+                result = m_text->substr(m_startIndex, (m_endIndex - m_startIndex) + 1);
+            else
                 result = m_text->substr(m_startIndex);
-            }
         }
         else{
-            if(m_endIndex >= m_text->size()){
+            if(m_endIndex >= m_text->size())
                 result = m_text->substr(m_startIndex);
-            }
-            else{
-                result = m_text->substr(m_startIndex, (m_endIndex - m_startIndex)
-                    + 1);
-            }
+            else
+                result = m_text->substr(m_startIndex, (m_endIndex - m_startIndex) + 1);
         }
     }
+
     return result;
 }
 

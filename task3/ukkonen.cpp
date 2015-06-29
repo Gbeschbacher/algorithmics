@@ -9,23 +9,32 @@ Node* Ukkonen::buildSuffixTree(const std::string& text){
 }
 
 Node* Ukkonen::buildTree(const std::string& text){
+
     Node* root = new Node(s_text);
     Node* virtualRoot = new Node(s_text, true);
+
     root->setSuffixLink(virtualRoot);
+
     virtualRoot->addChild(root);
+
     int k = 1;
+
     root->setStartIndex(0);
     root->setEndIndex(-1);
+
     Reference ref;
+
     ref.m_node = root;
     ref.m_startIndex = k;
     ref.m_endIndex = 0;
     ref = update(root, ref, 0);
     ref.m_node = root;
+
     for(unsigned int i = 1; i < text.size(); i++){
         ref.m_endIndex = i-1;
         ref = update(root, ref, i);
     }
+
     return root;
 }
 
@@ -33,24 +42,33 @@ Reference Ukkonen::update(Node* root, const Reference& reference, const int inde
 
     Node* r = NULL;
     Node* old_r = root;
+
     Reference ref = canonize(reference);
+
     bool done = testAndSplit(ref, s_text->at(index), r);
+
     while(done == false){
+
         Node* newNode = new Node(s_text, false);
         newNode->setStartIndex(index);
         newNode->setEndIndex(s_text->size() + 1);
         r->addChild(newNode);
-        if(old_r != root){
+
+        if(old_r != root)
             old_r->setSuffixLink(r);
-        }
+
         old_r = r;
+
         ref.m_node = ref.m_node->getSuffixLink();
+
         ref = canonize(ref);
+
         done = testAndSplit(ref, s_text->at(index), r);
     }
-    if(old_r != root){
+
+    if(old_r != root)
         old_r->setSuffixLink(ref.m_node);
-    }
+
     return ref;
 }
 
