@@ -162,6 +162,7 @@ bool Ukkonen::testAndSplit(Reference& reference, const char character, Node*& s)
 
             if(labelLength > 0 && label[0] == s_text->at(reference.m_startIndex)){
 
+
                 int length = reference.m_endIndex - reference.m_startIndex;
 
                 if(labelLength > length+1){

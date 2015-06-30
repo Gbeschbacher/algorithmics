@@ -27,51 +27,6 @@ void print(Node* node, int depth){
 
 }
 
-
-void doTraversal(Node *n, int labelHeight, int* maxHeight, int* substringStartIndex){
-    if(n == NULL)
-        return;
-
-    std::cout << "DO TRAVERSAL\n" << std::endl;
-
-    std::cout << "label: " << n->getLabel() << std::endl;
-    std::cout << "start: " << n->getStartIndex() << std::endl;
-    std::cout << "end: " << n->getEndIndex() << std::endl;
-
-    int i=0;
-    std::vector<Node*> children = n->getChildren();
-
-    if(children.size() > 1){ //If it is internal node
-        std::cout <<"\nIS INTERNAL\n" <<std::endl;
-        for (i = 0; i < children.size(); i++){
-            doTraversal(children[i], labelHeight + children[i]->getEndIndex() - children[i]->getStartIndex() , maxHeight, substringStartIndex);
-        }
-    }
-    else if(*maxHeight < labelHeight - children[i]->getEndIndex() - children[i]->getStartIndex()){
-        std::cout <<"ELSE IF" <<std::endl;
-        *maxHeight = labelHeight - children[i]->getEndIndex() - children[i]->getStartIndex();
-        // *substringStartIndex = n->suffixIndex;
-    }
-}
-
-
-void getLongestRepeatedSubstring(Node* root, std::string text){
-    int maxHeight = 0;
-    int substringStartIndex = 0;
-
-    doTraversal(root, 0, &maxHeight, &substringStartIndex);
-    // printf("maxHeight %d, substringStartIndex %d\n", maxHeight, substringStartIndex);
-
-    // printf("Longest Repeated Substring ", text);
-
-    int k;
-    for (k=0; k<maxHeight; k++)
-        printf("%c", text[k + substringStartIndex]);
-    if(k == 0)
-        printf("No repeated substring");
-    printf("\n");
-}
-
 static std::string getText(long l){
     long current = l;
     std::stringstream ss;
@@ -97,9 +52,9 @@ static void test(){
 int main(){
 
     std::string text = "ababbaa";
-    text = "ababbaa";
     text = "GEEKSFORGEEKS";
-    text = "banana";
+    text = "ababbaa";
+    text = "banana$";
     Ukkonen ukk;
     Node* root;
 
