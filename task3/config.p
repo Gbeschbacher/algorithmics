@@ -9,4 +9,4 @@ f(x) = k * x
 
 plot\
 "main.dat" using 2:4:6:xticlabel(2)  with errorlines title "processed Characters", \
-"main.dat" using 2:(f($2)) with linespoints title "test"
+"main.dat" using 2:(f($2)) with linespoints title "c * n (c = 0.00335)"

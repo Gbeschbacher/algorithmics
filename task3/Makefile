@@ -21,8 +21,8 @@ pedantic: $(FILES)
 plot:
 	gnuplot $(CONFIG) > $(RESULT)
 
-cg: $(PROG)
-	valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes  --simulate-cache=yes ./$(PROG)
+show:
+	shotwell $(RESULT)
 
 run: $(PROG)
 	./$(PROG)
