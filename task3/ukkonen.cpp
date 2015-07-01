@@ -31,6 +31,7 @@ Node* Ukkonen::buildTree(const std::string& text){
     ref.m_node = root;
 
     for(unsigned int i = 1; i < text.size(); i++){
+        // std::cout << "FOR COUNT: " << i << std::endl;
         ref.m_endIndex = i-1;
         ref = update(root, ref, i);
     }
@@ -43,11 +44,38 @@ Reference Ukkonen::update(Node* root, const Reference& reference, const int inde
     Node* r = NULL;
     Node* old_r = root;
 
+    // std::cout << "\n\nBEFORE CANONIZE IT" << std::endl;
+    // std::cout << "label: " << reference.m_node->getLabel()<< std::endl;
+    // std::cout << "startIDX: " << reference.m_startIndex<< std::endl;
+    // std::cout << "endIDX: " << reference.m_endIndex<< std::endl;
+    // std::cout << "BEFORE CANONIZE IT" << std::endl;
+
     Reference ref = canonize(reference);
+
+
+    // std::cout << "\n\nAFTER CANONIZE IT" << std::endl;
+    // std::cout << ref.m_startIndex<< std::endl;
+    // std::cout << ref.m_endIndex<< std::endl;
+    // std::cout << "AFTER CANONIZE IT" << std::endl;
+
+
 
     bool done = testAndSplit(ref, s_text->at(index), r);
 
+    // std::cout << "\n\ndone before while -----" << done << std::endl;
+    if(r != NULL){
+        // std::cout << "r " << std::endl;
+        // std::cout << "r start "<< r->getStartIndex() << std::endl;
+        // std::cout << "r end "<< r->getEndIndex() << std::endl;
+    }
+
     while(done == false){
+
+        // std::cout << "\n\nwhile done == false" << std::endl;
+        // std::cout << "mStart " << ref.m_node->getStartIndex() << std::endl;
+        // std::cout << "mEnd " << ref.m_node->getEndIndex()  << std::endl;
+        // std::cout << "while done == false" << std::endl;
+
 
         Node* newNode = new Node(s_text, false);
         newNode->setStartIndex(index);
@@ -64,6 +92,9 @@ Reference Ukkonen::update(Node* root, const Reference& reference, const int inde
         ref = canonize(ref);
 
         done = testAndSplit(ref, s_text->at(index), r);
+
+        // std::cout << "\n\ndone before while -----" << done << std::endl;
+
     }
 
     if(old_r != root)
@@ -105,6 +136,18 @@ Reference Ukkonen::canonize(const Reference& reference){
 
             if(label.size() > 0 && label[0] == s_text->at(result.m_startIndex)){
 
+
+            // std::cout << "\n\ncorrect child canonize" << std::endl;
+            // std::cout << "startIdx: "<< children[i]->getStartIndex() << std::endl;
+            // std::cout << "endIdx: "<< children[i]->getEndIndex() << std::endl;
+            // std::cout << "labelSize-1: "<< labelSize-1 << std::endl;
+            // std::cout << "p-k: "<< p - k << std::endl;
+            // std::cout << "p: "<< p << std::endl;
+            // std::cout << "k: "<< k << std::endl;
+            // std::cout << "correct child canonize" << std::endl;
+
+
+
                 if(children[i]->getChildren().size() <= 0 || labelSize-1 > (p - k))
                     return result;
 
@@ -119,6 +162,9 @@ Reference Ukkonen::canonize(const Reference& reference){
         if(found){
             k = result.m_startIndex;
             p = result.m_endIndex;
+            // std::cout << "\n\n new k and p "  << std::endl;
+            // std::cout << "new k: " << k << std::endl;
+            // std::cout << "new p: " << p << std::endl;
         }
         else
             return result;
@@ -132,6 +178,12 @@ bool Ukkonen::testAndSplit(Reference& reference, const char character, Node*& s)
         s = reference.m_node;
         return true;
     }
+
+
+    // std::cout << "\n\nTAS" << std::endl;
+    // std::cout << "k " << reference.m_startIndex << std::endl;
+    // std::cout << "p " << reference.m_endIndex << std::endl;
+    // std::cout << "TAS" << std::endl;
 
     if((reference.m_endIndex - reference.m_startIndex) < 0){
 
@@ -147,6 +199,8 @@ bool Ukkonen::testAndSplit(Reference& reference, const char character, Node*& s)
             }
 
         }
+
+
         s = reference.m_node;
         return false;
     }
@@ -161,7 +215,6 @@ bool Ukkonen::testAndSplit(Reference& reference, const char character, Node*& s)
             int labelLength = (children[i]->getEndIndex() - children[i]->getStartIndex()) + 1;
 
             if(labelLength > 0 && label[0] == s_text->at(reference.m_startIndex)){
-
 
                 int length = reference.m_endIndex - reference.m_startIndex;
 
