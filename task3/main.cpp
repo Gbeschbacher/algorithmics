@@ -113,64 +113,33 @@ int main(){
     text = "aba$";
     text = "ababbaa$";
     text = "ababba$";
+    text = "mississippi$";
     Ukkonen ukk;
-    // Node* root;
-
-    // root = ukk.buildSuffixTree(text);
-    // print(root, 0);
+    Node* root;
 
     std::cout << "\n\n* _ | \t | _ * \t * _ | \t | _ * \t * _ | \t | _ * \t\n\n";
 
     std::vector<std::string> labels;
     std::string current = "";
 
+    root = ukk.buildSuffixTree(text);
 
-    std::cout << "\n\n* _ | \t | _ * \t * _ | \t | _ * \t * _ | \t | _ * \t\n\n";
+    getInteralNodesWithLabels(root, labels, current);
 
+    auto comp = [](std::string const &first, std::string const &second){
+        if(first.length() > second.length())
+            return true;
+        else if (first.length() < second.length())
+            return false;
 
+        return first.compare(second) <= 0;
+    };
 
-    // getLongestRepeatedSS(root);
+    std::sort<std::vector<std::string>::iterator, decltype(comp)>(
+        labels.begin(), labels.end(), comp);
 
-
-    // std::stringstream ss;
-    // ss << "book1.txt";
-    // std::string s = load_file(ss.str());
-    // root = ukk.buildSuffixTree(s);
-    // print(root, 0);
-
-
-    // std::stringstream title;
-    // std::stringstream s;
-
-    // for (int i = 1; i <= 1; ++i){
-    //     title.str("");
-    //     title << "book" << i << ".txt";
-
-    //     s << load_file(title.str()) << "€";
-    // }
-
-    // text = s.str();
-
-    // root = ukk.buildSuffixTree(text);
-
-
-    // getInteralNodesWithLabels(root, labels, current);
-
-
-    // auto comp = [](std::string const &first, std::string const &second){
-    //     if(first.length() > second.length())
-    //         return true;
-    //     else if (first.length() < second.length())
-    //         return false;
-
-    //     return first.compare(second) <= 0;
-    // };
-
-    // std::sort<std::vector<std::string>::iterator, decltype(comp)>(
-    //     labels.begin(), labels.end(), comp);
-
-    // for(int i = 0; ( i < 3 && i < labels.size()); i++ )
-    //     std::cout << labels[i] << std::endl;
+    for(int i = 0; ( i < 3 && i < labels.size()); i++ )
+        std::cout << labels[i] << std::endl << std::endl;
 
 
     double samples[replications];
@@ -199,6 +168,4 @@ int main(){
         std::cout << "\tSTD_DEVIATION_" << i <<"\t" << sample_standard_deviation(samples, replications);
         std::endl;
     }
-
-
 }
