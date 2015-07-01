@@ -197,6 +197,7 @@ int main(){
         std::cout << "\tCHARACTERS\t" << s.str().size();
         std::cout << "\tAVG_TIME_MEAN_BOOK_" << i <<"\t" << arithmetic_mean(samples, replications);
         std::cout << "\tSTD_DEVIATION_" << i <<"\t" << sample_standard_deviation(samples, replications);
+        std::endl;
     }
 
 

@@ -1,7 +1,11 @@
 PROG=main
 FILES=main.cpp node.cpp ukkonen.cpp
 
-CXX1 = g++-4.9 -Wall --std=c++14
+CONFIG = config.p
+RESULT = results.png
+DATA = main.dat
+
+
 CXX = g++-4.9 --std=c++14
 
 all: clean build run
@@ -14,8 +18,8 @@ $(PROG): $(FILES)
 pedantic: $(FILES)
 	$(CXX) -Wextra -Werror -Weffc++ -pedantic $(FILES)
 
-time: $(PROG)
-	time ./$(PROG)
+plot:
+	gnuplot $(CONFIG) > $(RESULT)
 
 cg: $(PROG)
 	valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes  --simulate-cache=yes ./$(PROG)
